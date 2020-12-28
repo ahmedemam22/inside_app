@@ -147,7 +147,7 @@ class _LoginState extends State<Login> {
                       AuthField(
                           label: "Mobile Number",
                           validate: Validation(context).empty,
-                          controller: _mobileController.text,
+                          controller: _mobileController,
                           icon: Icon(
                             Icons.mobile_friendly_outlined,
                             color: Colors.white,
@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
                           isNumbers: true),
                       AuthField(
                           label: "Password",
-                          controller: _passController.text,
+                          controller: _passController,
 
                           validate:  Validation(context).empty,
                           icon: Icon(
@@ -177,15 +177,13 @@ class _LoginState extends State<Login> {
                  data.wait_supplier_login?Center(child: CircularProgressIndicator(),): RoundButton(
                       onPressed: () async{
     if (_formKey.currentState.validate()) {
-     await data.login_supplier({"mobile":_mobileController.text});
+    await data.login_supplier(_mobileController.text,_passController.text,context);
+
 
 
 
     }
-    Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Home();
-                        }));
+
                       },
                       text: "Login"),
                 ),

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class Api{
 
-  Future<Map>get(url)async {
+  Future<List<dynamic>> get(url)async {
     http.Response response = await http.get(url,headers: {'Content-Type': "application/json; charset=utf-8",
       'Accept': 'application/json',
       'Authorization': 'Token db9106ea2519696c8bdbc4eefc120e616a29cf72'},);

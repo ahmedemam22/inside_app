@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final clientResponse = clientResponseFromJson(jsonString);
+//     final loginclientResponse = loginclientResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-ClientResponse clientResponseFromJson(String str) => ClientResponse.fromJson(json.decode(str));
+List<LoginclientResponse> loginclientResponseFromJson(String str) => List<LoginclientResponse>.from(json.decode(str).map((x) => LoginclientResponse.fromJson(x)));
 
-String clientResponseToJson(ClientResponse data) => json.encode(data.toJson());
+String loginclientResponseToJson(List<LoginclientResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ClientResponse {
-  ClientResponse({
+class LoginclientResponse {
+  LoginclientResponse({
     this.url,
     this.mobile,
     this.name,
@@ -29,7 +29,7 @@ class ClientResponse {
   DateTime lastUpdated;
   bool isActive;
 
-  factory ClientResponse.fromJson(Map<String, dynamic> json) => ClientResponse(
+  factory LoginclientResponse.fromJson(Map<String, dynamic> json) => LoginclientResponse(
     url: json["url"],
     mobile: json["mobile"],
     name: json["name"],

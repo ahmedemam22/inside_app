@@ -208,8 +208,13 @@ class _RegisterState extends State<Register> {
                    data.wait_client_register?Center(child: CircularProgressIndicator(),) : RoundButton(
                         onPressed: ()async {
                           if (_formKey.currentState.validate()){
+                            var params={"name":_nameController.text,"mobile":_mobileController.text,"password":_passController.text};
                             if(isSupplier){
-                              await data.supplier_register({"name":_nameController.text,"mobile":_mobileController.text,"password":_passController.text});
+                              await data.supplier_register(params,context);
+                            }
+                            else{
+                              await data.client_register(params,context);
+
                             }
                           }
 
