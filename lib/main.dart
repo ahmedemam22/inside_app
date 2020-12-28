@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: appProvider.navigatorKey,
           title: Constants.appName,
           theme: ThemeData(fontFamily: 'Josef'),
-            initialRoute:'/supplier_home',
+            initialRoute:'/splash',
             routes: <String, WidgetBuilder>{
               '/splash': (BuildContext context) => SplashScreen(),
               '/home': (BuildContext context) => Home(),

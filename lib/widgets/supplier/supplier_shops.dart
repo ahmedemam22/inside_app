@@ -73,7 +73,7 @@ class _SupplierShopsWidgetState extends State<SupplierShopsWidget> {
       ),
       body: Consumer<SupplierProvider>(
           builder: (ctx, data, child) =>
-         data.suppliers==null?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),): Padding(
+         data.wait_get_suppliers?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),): Padding(
             padding: const EdgeInsets.only(bottom: 100.0),
             child: ListView.builder(
                 itemCount: data.suppliers.length,

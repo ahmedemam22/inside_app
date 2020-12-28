@@ -157,7 +157,7 @@ class _SupplierListState extends State<SupplierList> {
               Flexible(
                 child: Consumer<SupplierProvider>(
                     builder: (ctx, data, child) =>
-                 data.suppliers==null?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),) :ListView(
+                 data.wait_get_suppliers?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),) :ListView(
                     children: data.suppliers.map((e) {
 
                       return Padding(
