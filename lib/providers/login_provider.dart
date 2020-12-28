@@ -60,7 +60,7 @@ class LoginProvider extends ChangeNotifier {
 
       if (login)
         if(is_active){
-        Navigator.pushReplacementNamed(context, '/home');}
+        Navigator.pushReplacementNamed(context, '/supplier_home');}
         else awesome_dialog(context,"Account Active","account is not active yet");
       else
         awesome_dialog(context,"Error login","please check your email and password");

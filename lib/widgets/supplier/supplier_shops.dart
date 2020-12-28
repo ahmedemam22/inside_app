@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insideapp/models/shop.dart';
+import 'package:insideapp/providers/supplier_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:insideapp/screens/supplier/shop_details.dart';
 
 class SupplierShopsWidget extends StatefulWidget {
@@ -26,7 +28,7 @@ class _SupplierShopsWidgetState extends State<SupplierShopsWidget> {
     }
   }
 
-  shopListBuilder() {
+  /*shopListBuilder() {
     fetchedShops.forEach((element) {
       Widget shopWidget = GestureDetector(
         onTap: () {
@@ -51,12 +53,14 @@ class _SupplierShopsWidgetState extends State<SupplierShopsWidget> {
         thickness: 3,
       ));
     });
-  }
+  }*/
 
   @override
   void initState() {
-    shopListFetched();
-    shopListBuilder();
+    //shopListFetched();
+    //shopListBuilder();
+    Provider.of<SupplierProvider>(context,listen: false).get_suppliers().then((value) => null);
+
     super.initState();
   }
 
@@ -67,25 +71,81 @@ class _SupplierShopsWidgetState extends State<SupplierShopsWidget> {
         onPressed: () {},
         child: Icon(Icons.add),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 100.0),
-          child: Column(
-            children: shopList,
+      body: Consumer<SupplierProvider>(
+          builder: (ctx, data, child) =>
+         data.suppliers==null?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),): Padding(
+            padding: const EdgeInsets.only(bottom: 100.0),
+            child: ListView.builder(
+                itemCount: data.suppliers.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
 
-/*            [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return ShopDetails();
-                      },
+                itemBuilder: (BuildContext ctxt, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return ShopDetails(
+                              currentShop: data.suppliers[index],
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text('${data.suppliers[index].name}'),
+                      leading: Icon(Icons.store),
+                      subtitle: Text('${data.suppliers[index].bio} , ${data.suppliers[index].mobile}'),
                     ),
                   );
+                }
 
-                },
-                child: ListTile(
+
+
+
+
+
+
+            )
+
+/*            [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return ShopDetails();
+                        },
+                      ),
+                    );
+
+                  },
+                  child: ListTile(
+                    title: Text('Shop Name'),
+                    leading: Icon(Icons.store),
+                    subtitle: Text('18 the great av. , 012012312424'),
+                    trailing: Column(
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTile(
                   title: Text('Shop Name'),
                   leading: Icon(Icons.store),
                   subtitle: Text('18 the great av. , 012012312424'),
@@ -102,155 +162,132 @@ class _SupplierShopsWidgetState extends State<SupplierShopsWidget> {
                     ],
                   ),
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                Divider(
+                  thickness: 3,
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                ListTile(
+                  title: Text('Shop Name'),
+                  leading: Icon(Icons.store),
+                  subtitle: Text('18 the great av. , 012012312424'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                Divider(
+                  thickness: 3,
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Shop Name'),
-                leading: Icon(Icons.store),
-                subtitle: Text('18 the great av. , 012012312424'),
-                trailing: Column(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color: Colors.blue,
-                    ),
-                  ],
+                ListTile(
+                  title: Text('Shop Name'),
+                  leading: Icon(Icons.store),
+                  subtitle: Text('18 the great av. , 012012312424'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Divider(
-                thickness: 3,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-            ],*/
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTile(
+                  title: Text('Shop Name'),
+                  leading: Icon(Icons.store),
+                  subtitle: Text('18 the great av. , 012012312424'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTile(
+                  title: Text('Shop Name'),
+                  leading: Icon(Icons.store),
+                  subtitle: Text('18 the great av. , 012012312424'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTile(
+                  title: Text('Shop Name'),
+                  leading: Icon(Icons.store),
+                  subtitle: Text('18 the great av. , 012012312424'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],*/
+            ),
           ),
-        ),
-      ),
+
+
     );
   }
 }

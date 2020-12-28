@@ -6,6 +6,7 @@ import 'package:insideapp/providers/app_provider.dart';
 import 'package:insideapp/providers/register_provider.dart';
 import 'package:insideapp/providers/supplier_provider.dart';
 import 'package:insideapp/screens/splash.dart';
+import 'package:insideapp/screens/supplier_home.dart';
 import 'package:insideapp/util/const.dart';
 
 void main() {
@@ -34,10 +35,11 @@ class MyApp extends StatelessWidget {
           navigatorKey: appProvider.navigatorKey,
           title: Constants.appName,
           theme: ThemeData(fontFamily: 'Josef'),
-            initialRoute:'/splash',
+            initialRoute:'/supplier_home',
             routes: <String, WidgetBuilder>{
               '/splash': (BuildContext context) => SplashScreen(),
               '/home': (BuildContext context) => Home(),
+              '/supplier_home': (BuildContext context) => SupplierHome(),
               //'/splash': (BuildContext context) => SplashScreen(),
 
 

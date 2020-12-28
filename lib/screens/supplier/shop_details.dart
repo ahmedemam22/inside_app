@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:insideapp/models/Item.dart';
+import 'package:insideapp/models/login_supplier_response.dart';
 import 'package:insideapp/models/shop.dart';
 
 class ShopDetails extends StatefulWidget {
-  final Shop currentShop;
+  final LoginSupplierResponse currentShop;
 
   ShopDetails({Key key, @required this.currentShop}) : super(key: key);
 
@@ -161,7 +162,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text('${widget.currentShop.address}'),
+                        Text('${widget.currentShop.bio}'),
                       ],
                     ),
                     Row(

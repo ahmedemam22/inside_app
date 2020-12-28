@@ -22,6 +22,7 @@ class LoginSupplierResponse {
     this.dateToPay,
     this.mobile,
     this.password,
+    this.image,
   });
 
   dynamic type;
@@ -36,6 +37,7 @@ class LoginSupplierResponse {
   dynamic dateToPay;
   String mobile;
   String password;
+  dynamic image;
 
   factory LoginSupplierResponse.fromJson(Map<String, dynamic> json) => LoginSupplierResponse(
     type: json["type"],
@@ -50,6 +52,7 @@ class LoginSupplierResponse {
     dateToPay: json["date_to_pay"],
     mobile: json["mobile"],
     password: json["password"],
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class LoginSupplierResponse {
     "date_to_pay": dateToPay,
     "mobile": mobile,
     "password": password,
+    "image": image,
   };
 }

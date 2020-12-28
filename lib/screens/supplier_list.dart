@@ -19,12 +19,11 @@ class SupplierList extends StatefulWidget {
 }
 
 class _SupplierListState extends State<SupplierList> {
-  List<SupplierModel> suppliers = [];
   
 
   @override
-  void initState()async {
-   await Provider.of<SupplierProvider>(context,listen: false).get_suppliers();
+  void initState() {
+    Provider.of<SupplierProvider>(context,listen: false).get_suppliers().then((value) => null);
     super.initState();
   }
 
@@ -158,8 +157,9 @@ class _SupplierListState extends State<SupplierList> {
               Flexible(
                 child: Consumer<SupplierProvider>(
                     builder: (ctx, data, child) =>
-                 data.suppliers==null?Center(child: CircularProgressIndicator(),) :ListView(
+                 data.suppliers==null?Center(child: CircularProgressIndicator(backgroundColor: Colors.blue,),) :ListView(
                     children: data.suppliers.map((e) {
+
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ExpansionTileCard(
@@ -170,24 +170,24 @@ class _SupplierListState extends State<SupplierList> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                             Text('${e.bio??""}',
+                             /*Text('${e.bio??""}',
                                 style: TextStyle(color: Colors.black),),
                               SizedBox(
                                 height: 5,
-                              ),
-                              /*Container(
+                              ),*/
+                              Container(
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           color: Colors.orangeAccent
                                               .withOpacity(0.9))),
-                                  child: Image.asset('${e.profileImage}'))*/
+                                  child: Image.network('${e.image}'))
                             ],
                           ),
-                         /*leading: CircleAvatar(
-                            backgroundImage: AssetImage('${e.image}'),
+                        leading: CircleAvatar(
+                            backgroundImage: NetworkImage('${e.logo}'),
                             backgroundColor: Colors.white,
-                          ),*/
+                          ),
                           children: [
                             Divider(
                               thickness: 1.0,
@@ -220,7 +220,7 @@ class _SupplierListState extends State<SupplierList> {
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SupplierDetails(
-                                          //  currentSupplier: e,
+                                            currentSupplier: e,
                                           );
                                         },
                                       ),

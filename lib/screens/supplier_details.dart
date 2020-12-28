@@ -6,12 +6,13 @@ import 'package:insideapp/widgets/badge.dart';
 import 'package:insideapp/widgets/grid_product.dart';
 import 'package:insideapp/widgets/slider_item.dart';
 import 'package:insideapp/widgets/supplier/reviews.dart';
+import 'package:insideapp/models/login_supplier_response.dart';
 import 'package:video_player/video_player.dart';
 
 import 'notifications.dart';
 
 class SupplierDetails extends StatefulWidget {
-  final SupplierModel currentSupplier;
+  final  currentSupplier;
 
   SupplierDetails({Key key, @required this.currentSupplier}) : super(key: key);
 
@@ -276,7 +277,7 @@ class _SupplierDetailsState extends State<SupplierDetails> {
               children: [
                 CircleAvatar(
                   backgroundImage:
-                      AssetImage('${widget.currentSupplier.image}'),
+                      NetworkImage('${widget.currentSupplier.image}'),
                   radius: 35,
                   backgroundColor: Colors.white,
                 ),
@@ -302,7 +303,7 @@ class _SupplierDetailsState extends State<SupplierDetails> {
               height: 10,
             ),
             Text(
-              'Bio: Cool Decor Company is a wholesale distributor for a well-curated selection of quality design gifts, home accessories, and lifestyle products. We represent some of the best design brands from Europe, combining for a collection that stands out because of its aesthetics, quality and originality. Our collection represents a cool mix of products for both adults and kids that are meant to spark a positive emotion when see or use them.',
+              'Bio: ${widget.currentSupplier.bio}',
               style: TextStyle(color: Colors.black),),
             SizedBox(
               height: 10,

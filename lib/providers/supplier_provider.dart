@@ -7,7 +7,7 @@ class SupplierProvider extends ChangeNotifier{
 
   bool get wait_get_suppliers => _wait_get_suppliers;
   List<LoginSupplierResponse>suppliers;
-  get_suppliers()async{
+  Future get_suppliers()async{
     suppliers=[];
     try {
       _wait_get_suppliers = true;
