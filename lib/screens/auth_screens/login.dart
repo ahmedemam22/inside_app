@@ -177,7 +177,9 @@ class _LoginState extends State<Login> {
                  data.wait_supplier_login?Center(child: CircularProgressIndicator(),): RoundButton(
                       onPressed: () async{
     if (_formKey.currentState.validate()) {
-    await data.login_supplier(_mobileController.text,_passController.text,context);
+   if(isSupplier) await data.login_supplier(_mobileController.text,_passController.text,context);
+   else await data.login_client(_mobileController.text,_passController.text,context);
+
 
 
 

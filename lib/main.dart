@@ -4,6 +4,7 @@ import 'package:insideapp/screens/home.dart';
 import 'package:provider/provider.dart';
 import 'package:insideapp/providers/app_provider.dart';
 import 'package:insideapp/providers/register_provider.dart';
+import 'package:insideapp/providers/supplier_provider.dart';
 import 'package:insideapp/screens/splash.dart';
 import 'package:insideapp/util/const.dart';
 
@@ -14,6 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => RegisterProvider()),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
+        ChangeNotifierProvider(create: (_) => SupplierProvider()),
 
       ],
       child: MyApp(),

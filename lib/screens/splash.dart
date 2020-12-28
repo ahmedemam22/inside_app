@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:insideapp/util/shared.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:insideapp/screens/auth_screens/login.dart';
 import 'package:insideapp/screens/join.dart';
+import 'package:insideapp/globals.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -39,12 +41,15 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 3), () {
       logoController.fadeIn();
     });
-    Future.delayed(Duration(seconds: 8), () {
-      Navigator.pushReplacement(
+    Future.delayed(Duration(seconds: 8), () async{
+      await shared.getUser();
+
+      if(Globals.id!=null)Navigator.pushReplacementNamed(context, '/home');
+      else {Navigator.pushReplacement(
           context,
           PageRouteBuilder(
               transitionDuration: Duration(seconds: 2),
-              pageBuilder: (context, _, __) => Login()));
+              pageBuilder: (context, _, __) => Login()));}
     });
     // startTimeout();
   }

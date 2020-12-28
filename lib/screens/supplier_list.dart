@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:insideapp/models/supplier.dart';
 import 'package:insideapp/screens/supplier_details.dart';
 import 'package:insideapp/widgets/app_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:insideapp/providers/supplier_provider.dart';
 
 class SupplierList extends StatefulWidget {
   final IconData iconName;
@@ -18,50 +20,11 @@ class SupplierList extends StatefulWidget {
 
 class _SupplierListState extends State<SupplierList> {
   List<SupplierModel> suppliers = [];
+  
 
   @override
-  void initState() {
-    print(widget.iconName);
-    SupplierModel instance = SupplierModel(
-        name: 'Test Supplier',
-        bio: 'This is the best place to find everything you are looking for',
-        mobile: '01207199086',
-        established: '2011',
-        profileImage: 'assets/mock/living1.jpg',
-        image: 'assets/mock/decor.png',
-        id: 3,
-        desc: 'Decoration is power');
-    SupplierModel instance2 = SupplierModel(
-        name: 'Test Supplier2',
-        bio: 'This is the best place to find everything you are looking for',
-        mobile: '01207199086',
-        established: '2010',
-        profileImage: 'assets/mock/living1.jpg',
-        image: 'assets/mock/hardrock.jpg',
-        id: 3,
-        desc: 'Decoration is power');
-    SupplierModel instance3 = SupplierModel(
-        name: 'Test Supplier3',
-        bio: 'This is the best place to find everything you are looking for',
-        mobile: '01207199086',
-        established: '2001',
-        profileImage: 'assets/mock/living1.jpg',
-        image: 'assets/mock/const.jpg',
-        id: 3,
-        desc: 'Decoration is power');
-    SupplierModel instance4 = SupplierModel(
-        name: 'Test Supplier4',
-        bio: 'This is the best place to find everything you are looking for',
-        mobile: '01207199086',
-        profileImage: 'assets/mock/living1.jpg',
-        established: '1999',
-        image: 'assets/mock/build.jpg',
-        id: 3,
-        desc: 'Decoration is power');
-    suppliers.add(instance);
-    suppliers.add(instance2);
-    suppliers.add(instance3);
-    suppliers.add(instance4);
+  void initState()async {
+   await Provider.of<SupplierProvider>(context,listen: false).get_suppliers();
     super.initState();
   }
 
@@ -193,91 +156,94 @@ class _SupplierListState extends State<SupplierList> {
                 color: Colors.orangeAccent,
               ),
               Flexible(
-                child: ListView(
-                  children: suppliers.map((e) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ExpansionTileCard(
-                        baseColor: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        title: Text(
-                          '${e.name}', style: TextStyle(color: Colors.black),),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('${e.desc}',
-                              style: TextStyle(color: Colors.black),),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.orangeAccent
-                                            .withOpacity(0.9))),
-                                child: Image.asset('${e.profileImage}'))
-                          ],
-                        ),
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage('${e.image}'),
-                          backgroundColor: Colors.white,
-                        ),
-                        children: [
-                          Divider(
-                            thickness: 1.0,
-                            height: 1.0,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: Text(
-                                '${e.bio}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .copyWith(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                          ButtonBar(
-                            alignment: MainAxisAlignment.spaceAround,
-                            buttonHeight: 52.0,
-                            buttonMinWidth: 90.0,
+                child: Consumer<SupplierProvider>(
+                    builder: (ctx, data, child) =>
+                 data.suppliers==null?Center(child: CircularProgressIndicator(),) :ListView(
+                    children: data.suppliers.map((e) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ExpansionTileCard(
+                          baseColor: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          title: Text(
+                            '${e.name??""}', style: TextStyle(color: Colors.black),),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              FlatButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4.0)),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return SupplierDetails(
-                                          currentSupplier: e,
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.doorOpen),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                    ),
-                                    Text('Show Provider Profile'),
-                                  ],
+                             Text('${e.bio??""}',
+                                style: TextStyle(color: Colors.black),),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              /*Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.orangeAccent
+                                              .withOpacity(0.9))),
+                                  child: Image.asset('${e.profileImage}'))*/
+                            ],
+                          ),
+                         /*leading: CircleAvatar(
+                            backgroundImage: AssetImage('${e.image}'),
+                            backgroundColor: Colors.white,
+                          ),*/
+                          children: [
+                            Divider(
+                              thickness: 1.0,
+                              height: 1.0,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: Text(
+                                  '${e.bio}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .copyWith(fontSize: 16),
                                 ),
                               ),
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList(),
+                            ),
+                            ButtonBar(
+                              alignment: MainAxisAlignment.spaceAround,
+                              buttonHeight: 52.0,
+                              buttonMinWidth: 90.0,
+                              children: [
+                                FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0)),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return SupplierDetails(
+                                          //  currentSupplier: e,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: <Widget>[
+                                      Icon(FontAwesomeIcons.doorOpen),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2.0),
+                                      ),
+                                      Text('Show Provider Profile'),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ],

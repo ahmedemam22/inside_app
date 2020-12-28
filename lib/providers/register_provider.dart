@@ -15,7 +15,7 @@ class RegisterProvider extends ChangeNotifier{
      notifyListeners();
      var reponse=await api.post(BASE_URL+SUPPLIER_REGISTER, data);
    if(reponse.statusCode==400){
-     awesome_dialog(context);
+     awesome_dialog(context,'Error Registration','this mobile already exists.');
 
    }
    }
@@ -35,7 +35,7 @@ class RegisterProvider extends ChangeNotifier{
      print(json.decode(response.body));
      print("ssssssssss");
       if(response.statusCode==400){
-        awesome_dialog(context);
+        awesome_dialog(context,'Error Registration','this mobile already exists.');
 
       }
     }

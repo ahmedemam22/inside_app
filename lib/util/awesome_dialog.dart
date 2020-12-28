@@ -1,12 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-awesome_dialog(context){
+awesome_dialog(context,title,desc){
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.ERROR,
     animType: AnimType.BOTTOMSLIDE,
-    title: 'Error Registration',
-    desc: 'this mobile already exists.',
+    title: title,
+    desc: desc,
     btnOkOnPress: () {},
   )..show();
 }
