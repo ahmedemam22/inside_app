@@ -1,5 +1,6 @@
 class FinishRequestModel{
   String buildingType;
+  String building_details;
   bool full_finishing=true;
   bool partial_finishing=false;
   String current_status;

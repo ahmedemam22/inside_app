@@ -5,6 +5,7 @@ bool owner_ship=true;
 bool building_permit=true;
 bool geometry_diagram=true;
 String buildingType;
+String building_details;
 String floor_num;
 String floor_apartment;
 String location;

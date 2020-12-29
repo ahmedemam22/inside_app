@@ -327,6 +327,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                           border: OutlineInputBorder(),
                           hintText: "Shop Details",
                         ),
+                        onChanged: (val){
+                          requestSubmitModel.building_details=val;
+                        },
                         // The validator receives the text that the user has entered.
                         validator: (value) {
                           if (value.isEmpty) {
@@ -346,6 +349,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     controller: otherDetailsTextEditingController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.text,
+                    onChanged: (val){
+                      requestSubmitModel.building_details=val;
+                    },
                     autofocus: false,
                     decoration: new InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(8, 1, 1, 8),

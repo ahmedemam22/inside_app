@@ -21,11 +21,10 @@ Map<String,dynamic>set_data(var request,type) {
   var data;
   if (type == "construction") {
     print(request.owner_ship);
-    print("vvvvvvvv");
      data = {
-       'type': type ,
+       'type': 1 ,
        'client' :Globals.id,
-       'supplier': 1,
+       //'supplier': 1,
 
        'material_on_client': request.material_on_client,
       'ownership_of_land': request.owner_ship,
@@ -47,10 +46,11 @@ Map<String,dynamic>set_data(var request,type) {
   }
   else{
     data= {
-      'type': type ,
+      'type': 2 ,
       'client' :Globals.id,
-      'supplier': 1,
+     // 'supplier': 1,
       'building_type': request.buildingType,
+      if(request.buildingType=='Shop'||request.buildingType=='Other')'building_details':'',
       'full_finishing': request.full_finishing,
       'current_status': request.current_status,
       'building_area': request.area,
