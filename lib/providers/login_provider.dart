@@ -72,9 +72,8 @@ class LoginProvider extends ChangeNotifier {
     if (!is_supplier) {
       login_clients.forEach((element) async{
         if (element.mobile == mobile && element.password == pass)  {
-          print("sssss7777777");
           check = true;
-          await shared.setUser(element.id, 'client');
+          await shared.setUser(element.id, 'client',element.name);
 
         }
       });
@@ -85,7 +84,7 @@ class LoginProvider extends ChangeNotifier {
           is_active=element.isActive;
           if(is_active)  {
             check = true;
-            await shared.setUser(element.id, 'supplier');
+            await shared.setUser(element.id, 'supplier',element.name);
 
           }
 

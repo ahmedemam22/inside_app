@@ -32,8 +32,6 @@ class RegisterProvider extends ChangeNotifier{
       _wait_client_register=true;
       notifyListeners();
      var response= await api.post(BASE_URL+CLIENT_REGISTER,data);
-     print(json.decode(response.body));
-     print("ssssssssss");
       if(response.statusCode==400){
         awesome_dialog(context,'Error Registration','this mobile already exists.');
 

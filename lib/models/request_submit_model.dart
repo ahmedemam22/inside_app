@@ -1,9 +1,9 @@
 import 'package:insideapp/models/submit_request.dart';
 class ConstructorRequest extends SubmitRequest{
 bool material_on_client;
-bool owner_ship;
-bool building_permit;
-bool geometry_diagram;
+bool owner_ship=true;
+bool building_permit=true;
+bool geometry_diagram=true;
 String buildingType;
 String floor_num;
 String floor_apartment;

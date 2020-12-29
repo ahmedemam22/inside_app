@@ -5,7 +5,7 @@ import 'package:insideapp/util/furnitures.dart';
 import 'package:insideapp/widgets/profile_widget.dart';
 import 'package:insideapp/widgets/slider_item.dart';
 import 'package:insideapp/widgets/supplier/supplier_shops.dart';
-
+import 'package:insideapp/globals.dart';
 class SupplierHome extends StatefulWidget {
   @override
   _SupplierHomeState createState() => _SupplierHomeState();
@@ -31,7 +31,7 @@ class _SupplierHomeState extends State<SupplierHome> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Supplier name here'),
+                Text(Globals.name??""),
                 IconButton(
                   icon: Icon(Icons.logout, color: Colors.red),
                   onPressed: () {

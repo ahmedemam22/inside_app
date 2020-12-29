@@ -127,9 +127,10 @@ class _ContractorsFormState extends State<ContractorsForm> {
             backText: "Back",
             finalText: 'Submit',
             iconColor: Colors.orangeAccent),
-        onCompleted: () {
+        onCompleted: () async{
+
           FocusScope.of(context).unfocus();
-          showDialog(
+         showDialog(
               context: context,
               barrierDismissible: false,
               builder: (_) => AlertDialog(
@@ -137,7 +138,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                 content: Text('Request will be sent to Outside-in team'),
                 actions: [
                   FlatButton(
-                      onPressed: () {
+                      onPressed: () async{
+                        await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(requestSubmitModel, 'construction');
+
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
@@ -149,9 +152,8 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       child: Text('Confirm')),
                   FlatButton(
                       onPressed: () async{
-                       await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(requestSubmitModel, 'contractor');
 
-                        Navigator.of(context).pop();
+                       // Navigator.of(context).pop();
                       },
                       child: Text('Cancel'))
                 ],

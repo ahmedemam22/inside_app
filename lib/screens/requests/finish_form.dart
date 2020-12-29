@@ -101,9 +101,10 @@ class _FinishingFormState extends State<FinishingForm> {
             backText: "Back",
             finalText: 'Submit',
             iconColor: Colors.orangeAccent),
-        onCompleted: () {
+        onCompleted: ()async {
           FocusScope.of(context).unfocus();
-          showDialog(
+
+          await showDialog(
               context: context,
               barrierDismissible: false,
               builder: (_) => AlertDialog(
@@ -111,7 +112,9 @@ class _FinishingFormState extends State<FinishingForm> {
                 content: Text('Request will be sent to Outside-in team'),
                 actions: [
                   FlatButton(
-                      onPressed: () {
+                      onPressed: ()async {
+                        await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(finishRequestModel, 'finishing');
+
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
@@ -123,7 +126,6 @@ class _FinishingFormState extends State<FinishingForm> {
                       child: Text('Confirm')),
                   FlatButton(
                       onPressed: () async{
-                        await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(finishRequestModel, 'finish');
 
                         Navigator.of(context).pop();
                       },

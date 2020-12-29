@@ -1,7 +1,7 @@
 class FinishRequestModel{
   String buildingType;
-  bool full_finishing;
-  bool partial_finishing;
+  bool full_finishing=true;
+  bool partial_finishing=false;
   String current_status;
   String area;
   String room_num;
