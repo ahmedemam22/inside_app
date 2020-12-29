@@ -2,6 +2,10 @@ import 'package:cool_stepper/cool_stepper.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:insideapp/models/finish_request_model.dart';
+import 'package:insideapp/providers/request_submit_provider.dart';
+import 'package:provider/provider.dart';
+
 
 import '../home.dart';
 
@@ -64,6 +68,7 @@ class _FinishingFormState extends State<FinishingForm> {
   TextEditingController roomsTextEditingController = TextEditingController();
   TextEditingController bathroomsTextEditingController =
       TextEditingController();
+  FinishRequestModel finishRequestModel=FinishRequestModel();
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +122,9 @@ class _FinishingFormState extends State<FinishingForm> {
                       },
                       child: Text('Confirm')),
                   FlatButton(
-                      onPressed: () {
+                      onPressed: () async{
+                        await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(finishRequestModel, 'finish');
+
                         Navigator.of(context).pop();
                       },
                       child: Text('Cancel'))
@@ -140,11 +147,13 @@ class _FinishingFormState extends State<FinishingForm> {
                       onSaved: (value) {
                         setState(() {
                           _buildingType = value;
+                          finishRequestModel.buildingType=value;
                         });
                       },
                       onChanged: (value) {
                         setState(() {
                           _buildingType = value;
+                          finishRequestModel.buildingType=value;
                           value == "Other" ? others = true : others = false;
                           value == "Shop" ? shops = true : shops = false;
                         });
@@ -278,11 +287,16 @@ class _FinishingFormState extends State<FinishingForm> {
                         setState(() {
                           fullFinishingCheckBoxValue = true;
                           partialFinishingCheckBoxValue = false;
+                          finishRequestModel.full_finishing=true;
+                          finishRequestModel.partial_finishing=false;
+
                         });
                       } else if (fullFinishingCheckBoxValue == true) {
                         setState(() {
                           fullFinishingCheckBoxValue = false;
                           partialFinishingCheckBoxValue = true;
+                          finishRequestModel.full_finishing=false;
+                          finishRequestModel.partial_finishing=true;
                         });
                       }
                     },
@@ -300,11 +314,15 @@ class _FinishingFormState extends State<FinishingForm> {
                         setState(() {
                           partialFinishingCheckBoxValue = true;
                           fullFinishingCheckBoxValue = false;
+                          finishRequestModel.full_finishing=false;
+                          finishRequestModel.partial_finishing=true;
                         });
                       } else if (partialFinishingCheckBoxValue == true) {
                         setState(() {
                           partialFinishingCheckBoxValue = false;
                           fullFinishingCheckBoxValue = true;
+                          finishRequestModel.full_finishing=true;
+                          finishRequestModel.partial_finishing=false;
                         });
                       }
                     },
@@ -327,6 +345,10 @@ class _FinishingFormState extends State<FinishingForm> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller: currentStatusTextEditingController,
+                      onChanged: (val){
+                        finishRequestModel.current_status=val;
+
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Required';
@@ -369,6 +391,10 @@ class _FinishingFormState extends State<FinishingForm> {
                     child: TextFormField(
                       keyboardType: TextInputType.numberWithOptions(),
                       controller: areaTextEditingController,
+                      onChanged: (val){
+                        finishRequestModel.area=val;
+
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Required';
@@ -404,6 +430,10 @@ class _FinishingFormState extends State<FinishingForm> {
                         }
                         return null;
                       },
+                      onChanged: (val){
+                        finishRequestModel.room_num=val;
+
+                      },
 
                       textInputAction: TextInputAction.next,
                       autofocus: false,
@@ -433,7 +463,10 @@ class _FinishingFormState extends State<FinishingForm> {
                         }
                         return null;
                       },
+                      onChanged: (val){
+                        finishRequestModel.bathroom_num=val;
 
+                      },
                       textInputAction: TextInputAction.next,
                       autofocus: false,
                       decoration: new InputDecoration(
@@ -479,34 +512,49 @@ class _FinishingFormState extends State<FinishingForm> {
                       onSaved: (value) {
                         setState(() {
                           _location = value;
+
+                            finishRequestModel.location=value;
+
+
                         });
                       },
                       onChanged: (value) {
                         _location = value;
+                        finishRequestModel.location=value;
+
                         if (value == "Cairo") {
                           cairo = true;
                           alex = false;
                           sinai = false;
                           giza = false;
                           _subLocation = "";
+                          finishRequestModel.city_location="";
+
+
                         } else if (value == "Alexandria") {
                           cairo = false;
                           sinai = false;
                           giza = false;
                           alex = true;
                           _subLocation = "";
+
+                          finishRequestModel.city_location="";
                         } else if (value == "Sinai") {
                           cairo = false;
                           alex = false;
                           giza = false;
                           sinai = true;
                           _subLocation = "";
+
+                          finishRequestModel.city_location="";
                         } else if (value == "Giza") {
                           cairo = false;
                           alex = false;
                           sinai = false;
                           giza = true;
                           _subLocation = "";
+                          finishRequestModel.city_location="";
+
                         }
                         setState(() {});
                       },
@@ -525,10 +573,16 @@ class _FinishingFormState extends State<FinishingForm> {
                         onSaved: (value) {
                           setState(() {
                             _subLocation = value;
+                            finishRequestModel.city_location=value;
+
+
+
                           });
                         },
                         onChanged: (value) {
                           _subLocation = value;
+                          finishRequestModel.city_location=value;
+
                           setState(() {});
                         },
                         dataSource: cairoCities,
@@ -546,10 +600,14 @@ class _FinishingFormState extends State<FinishingForm> {
                         onSaved: (value) {
                           setState(() {
                             _subLocation = value;
+                            finishRequestModel.city_location=value;
+
                           });
                         },
                         onChanged: (value) {
                           _subLocation = value;
+                          finishRequestModel.city_location=value;
+
                           setState(() {});
                         },
                         dataSource: alexCities,
@@ -564,13 +622,18 @@ class _FinishingFormState extends State<FinishingForm> {
                         titleText: 'City',
                         hintText: 'Please choose one',
                         value: _subLocation,
+
                         onSaved: (value) {
                           setState(() {
                             _subLocation = value;
+                            finishRequestModel.city_location=value;
+
                           });
                         },
                         onChanged: (value) {
                           _subLocation = value;
+                          finishRequestModel.city_location=value;
+
                           setState(() {});
                         },
                         dataSource: sinaiCities,
@@ -588,10 +651,14 @@ class _FinishingFormState extends State<FinishingForm> {
                         onSaved: (value) {
                           setState(() {
                             _subLocation = value;
+                            finishRequestModel.city_location=value;
+
                           });
                         },
                         onChanged: (value) {
                           _subLocation = value;
+                          finishRequestModel.city_location=value;
+
                           setState(() {});
                         },
                         dataSource: gizaCities,
@@ -615,6 +682,10 @@ class _FinishingFormState extends State<FinishingForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      onChanged: (val){
+                        finishRequestModel.budget=val;
+
+                      },
                       controller: budgetTextEditingController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.numberWithOptions(),
@@ -643,6 +714,10 @@ class _FinishingFormState extends State<FinishingForm> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      onChanged: (val){
+                        finishRequestModel.request_finishing=val;
+
+                      },
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       maxLength: 4000,

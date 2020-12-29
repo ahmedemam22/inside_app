@@ -2,6 +2,9 @@ import 'package:cool_stepper/cool_stepper.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:insideapp/screens/home.dart';
+import 'package:insideapp/models/request_submit_model.dart';
+import 'package:provider/provider.dart';
+import 'package:insideapp/providers/request_submit_provider.dart';
 
 class ContractorsForm extends StatefulWidget {
   final String materialType;
@@ -25,6 +28,8 @@ class _ContractorsFormState extends State<ContractorsForm> {
   bool supportCheckBoxValue = true;
   bool internalFinishingCheckBoxValue = true;
   bool externalFinishingCheckBoxValue = true;
+  ConstructorRequest requestSubmitModel=ConstructorRequest();
+
 
   List<String> buildingList = [
     'Connected Villa',
@@ -103,6 +108,7 @@ class _ContractorsFormState extends State<ContractorsForm> {
 
   @override
   Widget build(BuildContext context) {
+    requestSubmitModel.material_on_client=widget.materialType=="Material On Client"?true:false;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -142,7 +148,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       },
                       child: Text('Confirm')),
                   FlatButton(
-                      onPressed: () {
+                      onPressed: () async{
+                       await Provider.of<RequestSubmitProvider>(context,listen: false).make_request(requestSubmitModel, 'contractor');
+
                         Navigator.of(context).pop();
                       },
                       child: Text('Cancel'))
@@ -160,10 +168,13 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     if (ownerShipCheckBoxValue == false) {
                       setState(() {
                         ownerShipCheckBoxValue = true;
+                       requestSubmitModel.owner_ship=true;
                       });
                     } else if (ownerShipCheckBoxValue == true) {
                       setState(() {
                         ownerShipCheckBoxValue = false;
+                        requestSubmitModel.owner_ship=false;
+
                       });
                     }
                   },
@@ -182,10 +193,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     if (buildingPermitCheckBoxValue == false) {
                       setState(() {
                         buildingPermitCheckBoxValue = true;
+                        requestSubmitModel.building_permit=true;
+
                       });
                     } else if (buildingPermitCheckBoxValue == true) {
                       setState(() {
                         buildingPermitCheckBoxValue = false;
+                       requestSubmitModel.building_permit=false;
+
                       });
                     }
                   },
@@ -204,10 +219,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     if (geometryCheckBoxValue == false) {
                       setState(() {
                         geometryCheckBoxValue = true;
+                      requestSubmitModel.geometry_diagram=true;
+
                       });
                     } else if (geometryCheckBoxValue == true) {
                       setState(() {
                         geometryCheckBoxValue = false;
+                       requestSubmitModel.geometry_diagram=false;
+
                       });
                     }
                   },
@@ -238,11 +257,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     onSaved: (value) {
                       setState(() {
                         _buildingType = value;
+                     requestSubmitModel.buildingType=value;
                       });
                     },
                     onChanged: (value) {
                       setState(() {
                         _buildingType = value;
+                      requestSubmitModel.buildingType=value;
+
                         value == "Other" ? others = true : others = false;
                         value == "Shop" ? shops = true : shops = false;
                       });
@@ -381,6 +403,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                             }
                             return null;
                           },
+                          onChanged: (val){
+                           requestSubmitModel.floor_num=val;
+                          },
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: new InputDecoration(
@@ -413,6 +438,10 @@ class _ContractorsFormState extends State<ContractorsForm> {
                         child: TextFormField(
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
+                          onChanged: (val){
+                          requestSubmitModel.floor_apartment=val;
+
+                          },
                           decoration: new InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(8, 1, 1, 8),
                             hintText: '0',
@@ -453,10 +482,13 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     onSaved: (value) {
                       setState(() {
                         _location = value;
+                      requestSubmitModel.location=value;
                       });
                     },
                     onChanged: (value) {
                       _location = value;
+                      requestSubmitModel.location=value;
+
                       if (value == "Cairo") {
                         cairo = true;
                         alex = false;
@@ -499,10 +531,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       onSaved: (value) {
                         setState(() {
                           _subLocation = value;
+                          requestSubmitModel.sub_location=value;
+
                         });
                       },
                       onChanged: (value) {
                         _subLocation = value;
+                       requestSubmitModel.sub_location=value;
+
                         setState(() {});
                       },
                       dataSource: cairoCities,
@@ -520,10 +556,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       onSaved: (value) {
                         setState(() {
                           _subLocation = value;
+                         requestSubmitModel.sub_location=value;
+
                         });
                       },
                       onChanged: (value) {
                         _subLocation = value;
+                       requestSubmitModel.sub_location=value;
+
                         setState(() {});
                       },
                       dataSource: alexCities,
@@ -541,10 +581,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       onSaved: (value) {
                         setState(() {
                           _subLocation = value;
+                        requestSubmitModel.sub_location=value;
+
                         });
                       },
                       onChanged: (value) {
                         _subLocation = value;
+                       requestSubmitModel.sub_location=value;
+
                         setState(() {});
                       },
                       dataSource: sinaiCities,
@@ -562,10 +606,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                       onSaved: (value) {
                         setState(() {
                           _subLocation = value;
+                         requestSubmitModel.sub_location=value;
+
                         });
                       },
                       onChanged: (value) {
                         _subLocation = value;
+                        requestSubmitModel.sub_location=value;
+
                         setState(() {});
                       },
                       dataSource: gizaCities,
@@ -582,6 +630,10 @@ class _ContractorsFormState extends State<ContractorsForm> {
                         return 'Required';
                       }
                       return null;
+                    },
+                    onChanged: (val){
+                  requestSubmitModel.land_area=val;
+
                     },
 
                     textInputAction: TextInputAction.next,
@@ -609,6 +661,10 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     controller: buildingAreaTextEditingController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.numberWithOptions(),
+                    onChanged: (val){
+                     requestSubmitModel.building_area=val;
+
+                    },
                     autofocus: false,
                     decoration: new InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(8, 1, 1, 8),
@@ -676,10 +732,14 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     if (internalFinishingCheckBoxValue == false) {
                       setState(() {
                         internalFinishingCheckBoxValue = true;
+                       requestSubmitModel.internal=true;
+
                       });
                     } else if (internalFinishingCheckBoxValue == true) {
                       setState(() {
                         internalFinishingCheckBoxValue = false;
+                       requestSubmitModel.internal=false;
+
                       });
                     }
                   },
@@ -696,10 +756,15 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     if (externalFinishingCheckBoxValue == false) {
                       setState(() {
                         externalFinishingCheckBoxValue = true;
+                      requestSubmitModel.external=true;
+
+
                       });
                     } else if (externalFinishingCheckBoxValue == true) {
                       setState(() {
                         externalFinishingCheckBoxValue = false;
+                      requestSubmitModel.external=false;
+
                       });
                     }
                   },
@@ -733,6 +798,9 @@ class _ContractorsFormState extends State<ContractorsForm> {
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.numberWithOptions(),
                     autofocus: false,
+                    onChanged: (val){
+                   requestSubmitModel.budget=val;
+                    },
                     decoration: new InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(8, 1, 1, 8),
                       focusedBorder: OutlineInputBorder(
@@ -758,15 +826,20 @@ class _ContractorsFormState extends State<ContractorsForm> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      onChanged: (val){
+                       requestSubmitModel.notes=val;
+                      },
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       maxLength: 4000,
+
                       decoration: new InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: const BorderSide(
                                 color: Colors.orangeAccent, width: 2.0),
                           ),
+
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
